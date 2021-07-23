@@ -111,4 +111,54 @@ public class CandidateManager implements CandidateService{
 		return new SuccessDataResult<List<CandidateCv>>(cvs,"Cvler Listelendi");
 	}
 
+	@Override
+	public DataResult<CandidateCv> getByCandidateId(int candidateId) {
+		CandidateCv candidateCv= new CandidateCv();
+		Candidate candidate=this.candidateDao.getById(candidateId);
+		candidateCv.setFirst_name(candidate.getFirst_name());
+		candidateCv.setLast_name(candidate.getLast_name());
+		candidateCv.setIdentity_number(candidate.getIdentity_number());
+		candidateCv.setBirth_date(candidate.getBirth_date());
+		candidateCv.setNationalityId(candidate.getNationalityId());
+		candidateCv.setLinkedInAccount(candidate.getLinkedInAccount());
+		candidateCv.setGithubAccount(candidate.getGithubAccount());
+		candidateCv.setLanguages(this.knownLanguageService.getByUserId(candidateId).getData());
+		candidateCv.setCandidateSkills(this.candidateSkillService.getByUserId(candidateId).getData());
+		candidateCv.setSchools(this.schoolService.getByUserId(candidateId).getData());
+		candidateCv.setImages(this.imageService.getByUserId(candidateId).getData());
+		return new SuccessDataResult<CandidateCv>(candidateCv);
+	}
+
+	@Override
+	public Result updateGithub(String githublink, int candidateId) {
+		Candidate candidate= this.candidateDao.findById(candidateId);
+		candidate.setGithubAccount(githublink);
+		this.candidateDao.save(candidate);
+		return new SuccessResult("Güncellendi");
+	}
+
+	@Override
+	public Result deleteGithub(int candidateId) {
+		Candidate candidate= this.candidateDao.getById(candidateId);
+		candidate.setGithubAccount(null);
+		this.candidateDao.save(candidate);
+		return new SuccessResult("Silindi");
+	}
+
+	@Override
+	public Result updateLinkedin(String linkedinlink, int candidateId) {
+		Candidate candidate= this.candidateDao.findById(candidateId);
+		candidate.setLinkedInAccount(linkedinlink);
+		this.candidateDao.save(candidate);
+		return new SuccessResult("Güncellendi");
+	}
+
+	@Override
+	public Result deleteLinkedin(int candidateId) {
+		Candidate candidate= this.candidateDao.getById(candidateId);
+		candidate.setLinkedInAccount(null);
+		this.candidateDao.save(candidate);
+		return new SuccessResult("Silindi");
+	}
+
 }

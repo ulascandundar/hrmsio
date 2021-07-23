@@ -28,6 +28,7 @@ public class Employer extends User {
     @Column(name="PhoneNumber")
     private String phoneNumber;
 
+
     @Column(name="VerifiedBySystem")
     private boolean verifiedBySystem =false;
 
@@ -38,4 +39,8 @@ public class Employer extends User {
     @OneToMany(mappedBy = "employer")
     @JsonIgnore
 	private List<JobAdvertisement> jobAdvertisements;
+    
+    @OneToMany(mappedBy = "employer")
+    @JsonIgnore
+    private List<EmployerUpdate> employerUpdates;
 }

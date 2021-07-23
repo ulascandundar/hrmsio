@@ -19,7 +19,7 @@ import kodlamaio.hrmsio.business.abstracts.KnownLanguageService;
 
 @RestController
 @RequestMapping("/api/lang")
-@CrossOrigin
+@CrossOrigin()
 public class KnownLanguageController {
 
 	private KnownLanguageService knownLanguageService;

@@ -11,4 +11,5 @@ public interface SchoolService {
 	Result add(School school);
 	DataResult<List<School>> getAll();
 	DataResult<List<School>> getByUserId(int userId);
+	public Result deleteSchool(int schoolId);
 }

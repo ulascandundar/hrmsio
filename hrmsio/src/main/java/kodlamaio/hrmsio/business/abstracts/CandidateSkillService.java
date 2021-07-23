@@ -11,4 +11,5 @@ public interface CandidateSkillService {
 	Result add(CandidateSkill candidateSkill);
 	DataResult<List<CandidateSkill>> getAll();
 	DataResult<List<CandidateSkill>> getByUserId(int userId);
+	public Result deleteSkill(int skillId);
 }

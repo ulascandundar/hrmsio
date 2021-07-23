@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import kodlamaio.hrmsio.business.abstracts.CandidateSkillService;
 import kodlamaio.hrmsio.core.utilities.results.DataResult;
+import kodlamaio.hrmsio.core.utilities.results.ErrorResult;
 import kodlamaio.hrmsio.core.utilities.results.Result;
 import kodlamaio.hrmsio.core.utilities.results.SuccessDataResult;
 import kodlamaio.hrmsio.core.utilities.results.SuccessResult;
@@ -37,6 +38,15 @@ public class CandidateSkillManager implements CandidateSkillService{
 	@Override
 	public DataResult<List<CandidateSkill>> getByUserId(int candidateId) {
 		return new SuccessDataResult<List<CandidateSkill>>(this.candidateSkillDao.findByUserId(candidateId));
+	}
+
+	@Override
+	public Result deleteSkill(int skillId) {
+		if(!this.candidateSkillDao.existsById(skillId)){
+            return new ErrorResult("Böyle bir yetenek yok");
+        }
+        this.candidateSkillDao.deleteById(skillId);
+        return new SuccessResult("Okul silindi");
 	}
 
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kodlamaio.hrmsio.core.utilities.results.DataResult;
+import kodlamaio.hrmsio.core.utilities.results.ErrorResult;
 import kodlamaio.hrmsio.core.utilities.results.Result;
 import kodlamaio.hrmsio.core.utilities.results.SuccessDataResult;
 import kodlamaio.hrmsio.core.utilities.results.SuccessResult;
@@ -36,5 +37,14 @@ public class SchoolManager implements SchoolService{
 	@Override
 	public DataResult<List<School>> getByUserId(int userId) {
 		return new SuccessDataResult<List<School>>(this.schoolDao.findByUserId(userId));
+	}
+
+	@Override
+	public Result deleteSchool(int schoolId) {
+		if(!this.schoolDao.existsById(schoolId)){
+            return new ErrorResult("Böyle bir okul yok");
+        }
+        this.schoolDao.deleteById(schoolId);
+        return new SuccessResult("Okul silindi");
 	}
 }

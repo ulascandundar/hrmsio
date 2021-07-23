@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,6 +20,7 @@ import kodlamaio.hrmsio.entities.concretes.Image;
 
 @RestController
 @RequestMapping("/api/image")
+@CrossOrigin
 public class ImageController {
 
 	private ImageService imageService;
@@ -33,8 +35,8 @@ public class ImageController {
 		return this.imageService.add(image);
 	}
 	@PostMapping("/photoUpload")
-	public ResponseEntity<?> photoUpload(@RequestParam("userId") int userId, @RequestParam("image") MultipartFile image) {
-		return ResponseEntity.ok(this.imageService.upload(image,userId));
+	public ResponseEntity<?> photoUpload(@RequestParam MultipartFile multipartFile ,@RequestParam int userId) {
+		return ResponseEntity.ok(this.imageService.upload(multipartFile,userId));
 	}
 	
 	@GetMapping("/getAll")

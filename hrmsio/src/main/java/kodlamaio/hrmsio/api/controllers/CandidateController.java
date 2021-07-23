@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,6 +29,7 @@ import kodlamaio.hrmsio.entities.concretes.Candidate;
 
 @RestController
 @RequestMapping("/api/candidates")
+@CrossOrigin
 public class CandidateController {
 
 	private CandidateService candidateService;
@@ -65,6 +68,47 @@ public class CandidateController {
 	public DataResult<List<CandidateCv>> getAllCv(){
 		return candidateService.getAllCv();
 	}
+	
+	@GetMapping("/getbyidcv")
+	public DataResult<CandidateCv> getByIdCv(@RequestParam(name = "candidateId") int candidateId){
+		return candidateService.getByCandidateId(candidateId);
+	}
+	
+	@PutMapping("/updateGithub")
+    public ResponseEntity<?> updateGithub(@RequestParam String githublink,@RequestParam int candidateId){
+        Result result=this.candidateService.updateGithub(githublink,candidateId);
+        if(result.isSuccess()){
+            return ResponseEntity.ok(result);
+        }
+        return ResponseEntity.badRequest().body(result);
+    }
+
+    @DeleteMapping("/deleteGithub")
+    public ResponseEntity<?> deleteGithub(@RequestParam int candidateId){
+        Result result=this.candidateService.deleteGithub(candidateId);
+        if (result.isSuccess()){
+            return ResponseEntity.ok(result);
+        }
+        return ResponseEntity.badRequest().body(result);
+    }
+
+    @PutMapping("/updateLinkedin")
+    public ResponseEntity<?> updateLinkedin(@RequestParam String linkedinlink,@RequestParam int candidateId){
+        Result result=this.candidateService.updateLinkedin(linkedinlink,candidateId);
+        if(result.isSuccess()){
+            return ResponseEntity.ok(result);
+        }
+        return ResponseEntity.badRequest().body(result);
+    }
+
+    @DeleteMapping("/deleteLinkedin")
+    public ResponseEntity<?> deleteLinkedin(@RequestParam int candidateId){
+        Result result=this.candidateService.deleteLinkedin(candidateId);
+        if(result.isSuccess()){
+            return ResponseEntity.ok(result);
+        }
+        return ResponseEntity.badRequest().body(result);
+    }
 	
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	@ResponseStatus(value = HttpStatus.BAD_REQUEST)

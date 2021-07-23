@@ -16,4 +16,10 @@ public interface CandidateService {
 	Result dislikeJobAdvertisement(int candidateId, int jobAdvertisementId);
 	DataResult<List<Candidate>> getAllByFavouriteJobAdvertisementsId(int id);
 	DataResult<List<CandidateCv>> getAllCv();
+	DataResult<CandidateCv> getByCandidateId(int candidateId);
+	Result updateGithub(String githublink, int candidateId);
+    Result deleteGithub(int candidateId);
+
+    Result updateLinkedin(String linkedinlink, int candidateId);
+    Result deleteLinkedin(int candidateId);
 }
